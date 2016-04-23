@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ScarlettStation.iml" filepath="$PROJECT_DIR$/ScarlettStation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/sc-core.iml" filepath="$PROJECT_DIR$/core/sc-core.iml" />
     </modules>
   </component>
 </project>
