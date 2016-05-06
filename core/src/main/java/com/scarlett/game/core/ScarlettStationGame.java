@@ -1,22 +1,39 @@
 package com.scarlett.game.core;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.scarlett.game.core.animation.Animation;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2D;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.scarlett.game.core.entity.Entity;
-import com.scarlett.game.core.sound.Sound;
+import com.scarlett.game.core.entity.player.Player;
+import com.scarlett.game.core.input.KeyboardInput;
 
 public class ScarlettStationGame implements ApplicationListener {
+    private static final float VIEWPORT_WIDTH = 80f;
+    private static final float VIEWPORT_HEIGHT = 80f;
+    private static final float TIME_STEP = 1/120f;
     private SpriteBatch batch;
-    private Entity entity;
+    private static Entity player;
+    private static Camera camera;
+    private static World world;
+    private Box2DDebugRenderer debugRenderer;
+    private KeyboardInput keyboardInput;
 
     @Override
     public void create() {
+        Box2D.init();
         batch = new SpriteBatch();
-        entity = Entity.createEntity("entity.xml");
+        createCamera();
+        debugRenderer = new Box2DDebugRenderer();
+        world = new World(Vector2.Zero, true);
+        player = Player.createPlayer("player.xml");
+        keyboardInput = new KeyboardInput();
     }
 
     @Override
@@ -32,12 +49,16 @@ public class ScarlettStationGame implements ApplicationListener {
     private void display(){
         Gdx.gl.glClearColor(255, 255, 255, 0);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+        batch.setProjectionMatrix(getCamera().combined);
+        debugRenderer.render(world, getCamera().combined);
         batch.begin();
-        entity.display(batch);
+        player.display(batch);
         batch.end();
     }
     private void update(){
-        entity.update();
+        keyboardInput.processInput((Player)player);
+        player.update();
+        getWorld().step(TIME_STEP, 12, 2);
     }
 
     @Override
@@ -50,5 +71,27 @@ public class ScarlettStationGame implements ApplicationListener {
 
     @Override
     public void dispose() {
+        batch.dispose();
+        world.dispose();
+    }
+
+    private void createCamera(){
+        camera = new OrthographicCamera(VIEWPORT_WIDTH,VIEWPORT_HEIGHT);
+        getCamera().position.set(VIEWPORT_WIDTH/4, VIEWPORT_HEIGHT/4, 0);
+        getCamera().viewportHeight = VIEWPORT_HEIGHT * 10;
+        getCamera().viewportWidth = VIEWPORT_WIDTH * 10;
+        getCamera().update();
+    }
+
+    public static Camera getCamera() {
+        return camera;
+    }
+
+    public static World getWorld(){
+        return world;
+    }
+
+    public static Entity getPlayer(){
+        return player;
     }
 }

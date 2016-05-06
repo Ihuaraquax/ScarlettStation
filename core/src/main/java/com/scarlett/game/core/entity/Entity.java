@@ -1,24 +1,34 @@
 package com.scarlett.game.core.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.scarlett.game.core.animation.Animation;
 import com.scarlett.game.core.animation.AnimationDescriptor;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.scarlett.game.core.utils.BodyFactory;
 
 public class Entity {
-    private Animation idleAnimation;
-    private Animation walkAnimation;
-    private Animation shootAnimation;
-    private Animation deathAnimation;
-    private Attributes attributes;
-    private EntityState state;
-    private Coordinates coordinates;
+    protected Animation idleAnimation;
+    protected Animation walkAnimation;
+    protected Animation shootAnimation;
+    protected Animation deathAnimation;
+    protected Attributes attributes;
+    protected EntityState state;
+    protected Coordinates coordinates;
+    protected Body body;
+    private float speedX;
+    private float speedY;
 
     public Entity(EntityDescriptor descriptor){
         System.out.print(descriptor.getAnimations().size());
         assignAnimations(descriptor);
         attributes = new Attributes(descriptor.getAttributes());
         state = EntityState.IDLE;
-        coordinates = new Coordinates(10, 10, 0, 0);
+        coordinates = new Coordinates(10, 10, 0, 0, 1);
+        float width = descriptor.getAttributes().getWidth();
+        float height = descriptor.getAttributes().getWidth();
+        body = BodyFactory.createRectangularBody(10,10, height, width, this);
     }
 
     public static Entity createEntity(String filepath){
@@ -32,25 +42,52 @@ public class Entity {
 
     public void update(){
         coordinates.update();
+        body.setLinearVelocity(new Vector2(speedX, speedY));
+        speedX = 0;
+        speedY = 0;
+        specificUpdate();
+    }
+
+    protected void specificUpdate(){
+
     }
 
     public void display(SpriteBatch batch){
-        float x = coordinates.getX();
-        float y = coordinates.getY();
+        TextureRegion region = null;
         switch (state){
             case IDLE:
-                batch.draw(idleAnimation.getCurrentRegion(),x ,y);
+                region = idleAnimation.getCurrentRegion();
                 break;
             case WALKING:
-                batch.draw(walkAnimation.getCurrentRegion(),x ,y);
+                region = walkAnimation.getCurrentRegion();
                 break;
             case SHOOTING:
-                batch.draw(shootAnimation.getCurrentRegion(),x ,y);
+                region = shootAnimation.getCurrentRegion();
                 break;
             case DYING:
-                batch.draw(deathAnimation.getCurrentRegion(),x ,y);
+                region = deathAnimation.getCurrentRegion();
                 break;
         }
+        float imageWidth = region.getRegionWidth();
+        float imageHeight = region.getRegionHeight();
+        float imageCenterX = imageWidth/2;
+        float imageCenterY = imageHeight/2;
+        // nie bardzo rozumiem dlaczego, ale dziala
+        float x = body.getPosition().x - imageCenterX;
+        float y = body.getPosition().y - imageCenterY;
+        float angle = coordinates.getAngle();
+
+        batch.draw(region, x, y, imageCenterX, imageCenterY, imageWidth, imageHeight, 1, 1, angle);
+    }
+
+    public void move(int horizontal, int vertical){
+        if(horizontal != 0) {
+            speedX = attributes.getSpeed() * horizontal;
+        }
+        if(vertical != 0) {
+            speedY = attributes.getSpeed() * vertical;
+        }
+        state = EntityState.WALKING;
     }
 
     private void assignAnimations(EntityDescriptor descriptor){

@@ -5,13 +5,15 @@ public class Coordinates {
     private float y;
     private float speedX;
     private float speedY;
+    private float angle;
 
 
-    public Coordinates(float x, float y, float speedX, float speedY) {
+    public Coordinates(float x, float y, float speedX, float speedY, float angle) {
         this.x = x;
         this.y = y;
         this.speedX = speedX;
         this.speedY = speedY;
+        this.angle = angle;
     }
 
     public void update(){
@@ -43,5 +45,13 @@ public class Coordinates {
 
     public float getX() {
         return x;
+    }
+
+    public float getAngle() {
+        return angle;
+    }
+
+    public void setAngle(float angle){
+        this.angle = angle;
     }
 }

@@ -23,4 +23,40 @@ public class Attributes {
         this.categoryBits = descriptor.getCollisionCategoryBit();
         this.entityType = descriptor.getEntityType();
     }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public int getArmor() {
+        return armor;
+    }
+
+    public Resistances getResistances() {
+        return resistances;
+    }
+
+    public short getMaskBits() {
+        return maskBits;
+    }
+
+    public short getCategoryBits() {
+        return categoryBits;
+    }
+
+    public int getEntityType() {
+        return entityType;
+    }
 }
