@@ -1,6 +1,7 @@
 package com.scarlett.game.core.animation;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
@@ -17,13 +18,15 @@ public class Animation {
     public Animation(AnimationDescriptor descriptor) {
         this.descriptor = descriptor;
         regions = new Array<TextureRegion>();
-        Texture texture = new Texture(Gdx.files.internal(descriptor.getDirectory()));
+        FileHandle fileHandle = Gdx.files.internal(descriptor.getDirectory());
+        Texture texture = new Texture(fileHandle);
         TextureRegion region[][] = TextureRegion.split(texture, descriptor.getWidth(), descriptor.getHeight());
         for (TextureRegion[] row : region) {
             for (TextureRegion tile : row) {
                 regions.add(tile);
             }
         }
+        System.out.print(descriptor.getType());
         type = AnimationType.getByCode(descriptor.getType());
     }
 

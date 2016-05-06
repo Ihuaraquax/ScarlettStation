@@ -6,16 +6,17 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.scarlett.game.core.animation.Animation;
+import com.scarlett.game.core.entity.Entity;
+import com.scarlett.game.core.sound.Sound;
 
 public class ScarlettStationGame implements ApplicationListener {
-    Animation animation;
-    SpriteBatch batch;
-    float elapsed;
+    private SpriteBatch batch;
+    private Entity entity;
 
     @Override
     public void create() {
-        animation = Animation.createAnimation("animationdescriptor.xml");
         batch = new SpriteBatch();
+        entity = Entity.createEntity("entity.xml");
     }
 
     @Override
@@ -24,13 +25,19 @@ public class ScarlettStationGame implements ApplicationListener {
 
     @Override
     public void render() {
-        TextureRegion texture = animation.getCurrentRegion();
-        elapsed += Gdx.graphics.getDeltaTime();
+        display();
+        update();
+    }
+
+    private void display(){
         Gdx.gl.glClearColor(255, 255, 255, 0);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        batch.draw(texture, 100 + 100 * (float) Math.cos(elapsed), 100 + 25 * (float) Math.sin(elapsed));
+        entity.display(batch);
         batch.end();
+    }
+    private void update(){
+        entity.update();
     }
 
     @Override

@@ -21,13 +21,25 @@ public class AnimationDescriptor {
     private int type;
     @XmlElement(name = "speed")
     private float speed;
+    @XmlElement(name = "id")
+    private int id;
 
-    AnimationDescriptor(String directory, int width, int height, int type, float speed) {
+    AnimationDescriptor(){
+        this.directory = null;
+        this.width = 0;
+        this.height = 0;
+        this.type = 0;
+        this.speed = 0;
+        this.id = 0;
+    }
+
+    AnimationDescriptor(String directory, int width, int height, int type, float speed, int id) {
         this.directory = directory;
         this.width = width;
         this.height = height;
         this.type = type;
         this.speed = speed;
+        this.id = id;
     }
 
     public static AnimationDescriptor getFromFile(String filepath) {
@@ -61,5 +73,9 @@ public class AnimationDescriptor {
 
     public String getDirectory() {
         return directory;
+    }
+
+    public int getId() {
+        return id;
     }
 }

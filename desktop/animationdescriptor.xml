@@ -1,0 +1,7 @@
+<animation>
+	<directory>animation.png</directory>
+	<image-width>210</image-width>
+	<image-height>290</image-height>
+	<code>3</code>
+	<speed>0.05</speed>
+</animation>

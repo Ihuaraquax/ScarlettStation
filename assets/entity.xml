@@ -1,0 +1,33 @@
+<entity>
+	<animations>
+		<animation>
+			<directory>animation.png</directory>
+			<image-width>210</image-width>
+			<image-height>290</image-height>
+			<code>0</code>
+			<speed>10</speed>
+			<id>0</id>
+		</animation>
+	</animations>
+	<idle-animation-id>0</idle-animation-id>
+	<walk-animation-id>0</walk-animation-id>
+	<shoot-animation-id>0</shoot-animation-id>
+	<death-animation-id>0</death-animation-id>
+	<attributes>
+		<health>100</health>
+		<speed>10</speed>
+		<width>10</width>
+		<height>10</height>
+		<armor>15</armor>
+		<damage-resistances>
+			<normal>10</normal>
+			<fire>20</fire>
+			<frost>20</frost>
+			<electicity>20</electicity>
+			<explosives>20</explosives>
+		</damage-resistances>
+		<collision-mask-bit>1</collision-mask-bit>
+		<collision-category-bit>1</collision-category-bit>
+		<entity-type>0<entity-type>
+	</attributes>
+</entity>
