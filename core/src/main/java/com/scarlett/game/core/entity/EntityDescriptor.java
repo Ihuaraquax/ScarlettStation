@@ -2,6 +2,7 @@ package com.scarlett.game.core.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.scarlett.game.core.animation.AnimationDescriptor;
+import com.scarlett.game.core.equipment.weapon.WeaponDescriptor;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -25,6 +26,8 @@ public class EntityDescriptor {
     private int deathAnimationId;
     @XmlElement(name = "attributes")
     private AttributesDescriptor attributes;
+    @XmlElement(name = "weapon")
+    private List<WeaponDescriptor> weapons;
 
     EntityDescriptor(){
         this.animations = null;
@@ -33,15 +36,17 @@ public class EntityDescriptor {
         this.shootAnimationId = 0;
         this.deathAnimationId = 0;
         this.attributes = null;
+        weapons = null;
     }
 
-    public EntityDescriptor(List<AnimationDescriptor> animations, int idleAnimationId, int walkAnimationId, int shootAnimationId, int deathAnimationId, AttributesDescriptor attributes) {
+    public EntityDescriptor(List<AnimationDescriptor> animations, int idleAnimationId, int walkAnimationId, int shootAnimationId, int deathAnimationId, AttributesDescriptor attributes, List<WeaponDescriptor> weapons) {
         this.animations = animations;
         this.idleAnimationId = idleAnimationId;
         this.walkAnimationId = walkAnimationId;
         this.deathAnimationId = deathAnimationId;
         this.shootAnimationId = shootAnimationId;
         this.attributes = attributes;
+        this.weapons = weapons;
     }
 
     public AttributesDescriptor getAttributes() {
@@ -79,5 +84,9 @@ public class EntityDescriptor {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public List<WeaponDescriptor> getWeapons() {
+        return weapons;
     }
 }

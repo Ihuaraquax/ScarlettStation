@@ -1,0 +1,13 @@
+<weapon>
+	<sound>
+		<directory>426_narwhales2.mp3</directory>
+		<type>1</type>
+		<volume>10</volume>
+		<id>0</id>
+	</sound>
+	<damage>30</damage>
+	<ammo-max>100</ammo-max>
+	<cooldown>0.7</cooldown>
+	<reload-time>3.1</reload-time>
+	<shooting-sound-id>0</shooting-sound-id>
+</weapon>

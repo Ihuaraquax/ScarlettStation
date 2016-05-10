@@ -17,17 +17,21 @@ public class SoundDescriptor {
     private int type;
     @XmlElement(name = "volume")
     private float volume;
+    @XmlElement(name = "id")
+    private int id;
 
     public SoundDescriptor(){
         directory = null;
         type = 0;
         volume = 0;
+        id = 0;
     }
 
-    public SoundDescriptor(String directory, int type, float volume) {
+    public SoundDescriptor(String directory, int type, float volume, int id) {
         this.directory = directory;
         this.type = type;
         this.volume = volume;
+        this.id = id;
     }
 
     public float getVolume() {
@@ -54,5 +58,9 @@ public class SoundDescriptor {
         }
 
         return result;
+    }
+
+    public int getId() {
+        return id;
     }
 }

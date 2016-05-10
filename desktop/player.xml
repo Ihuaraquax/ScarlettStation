@@ -9,9 +9,9 @@
 			<id>0</id>
 		</animation>
 		<animation>
-			<directory>walk.png</directory>
-			<image-width>56</image-width>
-			<image-height>58</image-height>
+			<directory>walk2.png</directory>
+			<image-width>62</image-width>
+			<image-height>64</image-height>
 			<type>0</type>
 			<speed>0.1</speed>
 			<id>1</id>
@@ -22,9 +22,9 @@
 		<death-animation-id>1</death-animation-id>
 		<attributes>
 			<health>100</health>
-			<speed>10</speed>
-			<width>10</width>
-			<height>10</height>
+			<speed>20</speed>
+			<width>1.2</width>
+			<height>1.2</height>
 			<armor>15</armor>
 			<damage-resistances>
 				<normal>10</normal>
@@ -37,5 +37,18 @@
 			<collision-category-bit>1</collision-category-bit>
 			<entity-type>0</entity-type>
 		</attributes>
+		<weapon>
+			<sound>
+				<directory>426_narwhales2.mp3</directory>
+				<type>1</type>
+				<volume>1</volume>
+				<id>0</id>
+			</sound>
+			<damage>30</damage>
+			<ammo-max>100</ammo-max>
+			<cooldown>0.7</cooldown>
+			<reload-time>3.1</reload-time>
+			<shooting-sound-id>0</shooting-sound-id>
+		</weapon>
 	</entity>
 </player>

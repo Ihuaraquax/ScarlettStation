@@ -3,12 +3,16 @@ package com.scarlett.game.core.entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.scarlett.game.core.ScarlettStationGame;
 import com.scarlett.game.core.animation.Animation;
 import com.scarlett.game.core.animation.AnimationDescriptor;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.scarlett.game.core.equipment.Equipment;
+import com.scarlett.game.core.equipment.weapon.Weapon;
 import com.scarlett.game.core.utils.BodyFactory;
 
 public class Entity {
+    private static final float DISPLAY_SCALE = 1/32f;
     protected Animation idleAnimation;
     protected Animation walkAnimation;
     protected Animation shootAnimation;
@@ -19,6 +23,7 @@ public class Entity {
     protected Body body;
     private float speedX;
     private float speedY;
+    private Equipment weapon;
 
     public Entity(EntityDescriptor descriptor){
         System.out.print(descriptor.getAnimations().size());
@@ -28,7 +33,8 @@ public class Entity {
         coordinates = new Coordinates(10, 10, 0, 0, 1);
         float width = descriptor.getAttributes().getWidth();
         float height = descriptor.getAttributes().getWidth();
-        body = BodyFactory.createRectangularBody(10,10, height, width, this);
+        body = BodyFactory.createRectangularBody(10, 10, height/3, width/3, this);
+        weapon = new Weapon(this, descriptor.getWeapons().get(0));
     }
 
     public static Entity createEntity(String filepath){
@@ -77,7 +83,7 @@ public class Entity {
         float y = body.getPosition().y - imageCenterY;
         float angle = coordinates.getAngle();
 
-        batch.draw(region, x, y, imageCenterX, imageCenterY, imageWidth, imageHeight, 1, 1, angle);
+        batch.draw(region, x, y, imageCenterX, imageCenterY, imageWidth, imageHeight, DISPLAY_SCALE, DISPLAY_SCALE, angle);
     }
 
     public void move(int horizontal, int vertical){
@@ -110,5 +116,9 @@ public class Entity {
                 deathAnimation = animation;
             }
         }
+    }
+
+    public void shoot(){
+        weapon.use();
     }
 }

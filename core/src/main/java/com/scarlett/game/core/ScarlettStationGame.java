@@ -13,8 +13,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.scarlett.game.core.entity.Entity;
 import com.scarlett.game.core.entity.player.Player;
 import com.scarlett.game.core.input.KeyboardInput;
+import com.scarlett.game.core.input.MouseInput;
 
 public class ScarlettStationGame implements ApplicationListener {
+    public static final float PIXELS_TO_METERS = 1/100f;
     private static final float VIEWPORT_WIDTH = 80f;
     private static final float VIEWPORT_HEIGHT = 80f;
     private static final float TIME_STEP = 1/120f;
@@ -49,6 +51,7 @@ public class ScarlettStationGame implements ApplicationListener {
     private void display(){
         Gdx.gl.glClearColor(255, 255, 255, 0);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+        getCamera().update();
         batch.setProjectionMatrix(getCamera().combined);
         debugRenderer.render(world, getCamera().combined);
         batch.begin();
@@ -57,6 +60,8 @@ public class ScarlettStationGame implements ApplicationListener {
     }
     private void update(){
         keyboardInput.processInput((Player)player);
+        MouseInput.processInput((Player)player);
+
         player.update();
         getWorld().step(TIME_STEP, 12, 2);
     }
@@ -77,9 +82,7 @@ public class ScarlettStationGame implements ApplicationListener {
 
     private void createCamera(){
         camera = new OrthographicCamera(VIEWPORT_WIDTH,VIEWPORT_HEIGHT);
-        getCamera().position.set(VIEWPORT_WIDTH/4, VIEWPORT_HEIGHT/4, 0);
-        getCamera().viewportHeight = VIEWPORT_HEIGHT * 10;
-        getCamera().viewportWidth = VIEWPORT_WIDTH * 10;
+        getCamera().position.set(VIEWPORT_WIDTH/2, VIEWPORT_HEIGHT/2, 0);
         getCamera().update();
     }
 

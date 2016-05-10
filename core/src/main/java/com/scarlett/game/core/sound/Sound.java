@@ -9,7 +9,7 @@ public class Sound {
     private final SoundType type;
     private Long id = null;
 
-     Sound(SoundDescriptor descriptor){
+     public Sound(SoundDescriptor descriptor){
         this.descriptor  = descriptor;
         FileHandle fileHandle = Gdx.files.internal(descriptor.getDirectory());
         sound = Gdx.audio.newSound(fileHandle);
