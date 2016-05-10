@@ -3,12 +3,12 @@ package com.scarlett.game.core.entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.scarlett.game.core.ScarlettStationGame;
 import com.scarlett.game.core.animation.Animation;
 import com.scarlett.game.core.animation.AnimationDescriptor;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.scarlett.game.core.equipment.Equipment;
 import com.scarlett.game.core.equipment.weapon.Weapon;
+import com.scarlett.game.core.equipment.weapon.WeaponDescriptor;
 import com.scarlett.game.core.utils.BodyFactory;
 
 public class Entity {
@@ -34,7 +34,10 @@ public class Entity {
         float width = descriptor.getAttributes().getWidth();
         float height = descriptor.getAttributes().getWidth();
         body = BodyFactory.createRectangularBody(10, 10, height/3, width/3, this);
-        weapon = new Weapon(this, descriptor.getWeapons().get(0));
+        WeaponDescriptor weaponDescriptor = descriptor.getWeapons().get(0);
+        if(weaponDescriptor != null) {
+            weapon = new Weapon(this, weaponDescriptor);
+        }
     }
 
     public static Entity createEntity(String filepath){
@@ -48,6 +51,7 @@ public class Entity {
 
     public void update(){
         coordinates.update();
+        weapon.update();
         body.setLinearVelocity(new Vector2(speedX, speedY));
         speedX = 0;
         speedY = 0;

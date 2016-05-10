@@ -38,7 +38,7 @@ public class Weapon extends Equipment{
 
     @Override
     public void use(){
-        if(reloaded){
+        if(reloaded && time == 0){
             shootingSound.playSound();
             ammoLeft--;
             if(ammoLeft <= 0){

@@ -11,21 +11,22 @@ import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.scarlett.game.core.entity.Entity;
+import com.scarlett.game.core.entity.allentities.AllEntities;
 import com.scarlett.game.core.entity.player.Player;
 import com.scarlett.game.core.input.KeyboardInput;
 import com.scarlett.game.core.input.MouseInput;
 
 public class ScarlettStationGame implements ApplicationListener {
     public static final float PIXELS_TO_METERS = 1/100f;
-    private static final float VIEWPORT_WIDTH = 80f;
-    private static final float VIEWPORT_HEIGHT = 80f;
+    private static final float VIEWPORT_WIDTH = 40f;
+    private static final float VIEWPORT_HEIGHT = 40f;
     private static final float TIME_STEP = 1/120f;
     private SpriteBatch batch;
-    private static Entity player;
     private static Camera camera;
     private static World world;
     private Box2DDebugRenderer debugRenderer;
     private KeyboardInput keyboardInput;
+    private static AllEntities allEntities;
 
     @Override
     public void create() {
@@ -34,8 +35,10 @@ public class ScarlettStationGame implements ApplicationListener {
         createCamera();
         debugRenderer = new Box2DDebugRenderer();
         world = new World(Vector2.Zero, true);
-        player = Player.createPlayer("player.xml");
+        Entity player = Player.createPlayer("player.xml");
         keyboardInput = new KeyboardInput();
+        allEntities = new AllEntities();
+        allEntities.setPlayer(player);
     }
 
     @Override
@@ -49,7 +52,8 @@ public class ScarlettStationGame implements ApplicationListener {
     }
 
     private void display(){
-        Gdx.gl.glClearColor(255, 255, 255, 0);
+        Entity player = allEntities.getPlayer();
+        Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         getCamera().update();
         batch.setProjectionMatrix(getCamera().combined);
@@ -59,8 +63,9 @@ public class ScarlettStationGame implements ApplicationListener {
         batch.end();
     }
     private void update(){
-        keyboardInput.processInput((Player)player);
-        MouseInput.processInput((Player)player);
+        Player player = allEntities.getPlayer();
+        keyboardInput.processInput(player);
+        MouseInput.processInput(player);
 
         player.update();
         getWorld().step(TIME_STEP, 12, 2);
@@ -94,7 +99,7 @@ public class ScarlettStationGame implements ApplicationListener {
         return world;
     }
 
-    public static Entity getPlayer(){
-        return player;
+    public static AllEntities getAllEntities(){
+        return allEntities;
     }
 }
