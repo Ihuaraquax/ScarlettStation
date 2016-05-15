@@ -2,6 +2,7 @@ package com.scarlett.game.core.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.scarlett.game.core.animation.Animation;
 import com.scarlett.game.core.animation.AnimationDescriptor;
@@ -19,30 +20,29 @@ public class Entity {
     protected Animation deathAnimation;
     protected Attributes attributes;
     protected EntityState state;
-    protected Coordinates coordinates;
     protected Body body;
-    private float speedX;
-    private float speedY;
-    private Equipment weapon;
+    protected boolean stopping = true;
+    protected float speedX;
+    protected float speedY;
+    private Equipment weapon = null;
 
-    public Entity(EntityDescriptor descriptor){
-        System.out.print(descriptor.getAnimations().size());
+    public Entity(EntityDescriptor descriptor, Vector2 position){
         assignAnimations(descriptor);
         attributes = new Attributes(descriptor.getAttributes());
         state = EntityState.IDLE;
-        coordinates = new Coordinates(10, 10, 0, 0, 1);
         float width = descriptor.getAttributes().getWidth();
         float height = descriptor.getAttributes().getWidth();
-        body = BodyFactory.createRectangularBody(10, 10, height/3, width/3, this);
-        WeaponDescriptor weaponDescriptor = descriptor.getWeapons().get(0);
-        if(weaponDescriptor != null) {
-            weapon = new Weapon(this, weaponDescriptor);
-        }
+        body = BodyFactory.createRectangularBody(position.x, position.y, height/3, width/3, this);
+        assignWeapons(descriptor);
     }
 
-    public static Entity createEntity(String filepath){
-        EntityDescriptor descriptor = EntityDescriptor.getFromFile(filepath);
-        return new Entity(descriptor);
+    private void assignWeapons(EntityDescriptor descriptor){
+        if(descriptor.getWeapons() != null) {
+            WeaponDescriptor weaponDescriptor = descriptor.getWeapons().get(0);
+            if (weaponDescriptor != null) {
+                weapon = new Weapon(this, weaponDescriptor);
+            }
+        }
     }
 
     public Attributes getAttributes() {
@@ -50,11 +50,14 @@ public class Entity {
     }
 
     public void update(){
-        coordinates.update();
-        weapon.update();
+        if(weapon != null) {
+            weapon.update();
+        }
         body.setLinearVelocity(new Vector2(speedX, speedY));
-        speedX = 0;
-        speedY = 0;
+        if(stopping) {
+            speedX = 0;
+            speedY = 0;
+        }
         specificUpdate();
     }
 
@@ -85,7 +88,7 @@ public class Entity {
         // nie bardzo rozumiem dlaczego, ale dziala
         float x = body.getPosition().x - imageCenterX;
         float y = body.getPosition().y - imageCenterY;
-        float angle = coordinates.getAngle();
+        float angle = getAngle();
 
         batch.draw(region, x, y, imageCenterX, imageCenterY, imageWidth, imageHeight, DISPLAY_SCALE, DISPLAY_SCALE, angle);
     }
@@ -124,5 +127,13 @@ public class Entity {
 
     public void shoot(){
         weapon.use();
+    }
+
+    public Vector2 getPosition() {
+        return body.getPosition();
+    }
+
+    public float getAngle(){
+        return body.getAngle() * MathUtils.radiansToDegrees;
     }
 }

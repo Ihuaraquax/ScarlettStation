@@ -1,7 +1,9 @@
 package com.scarlett.game.core.equipment.weapon;
 
 import com.badlogic.gdx.Gdx;
+import com.scarlett.game.core.ScarlettStationGame;
 import com.scarlett.game.core.entity.Entity;
+import com.scarlett.game.core.entity.bullet.Bullet;
 import com.scarlett.game.core.equipment.Equipment;
 import com.scarlett.game.core.equipment.EquipmentType;
 import com.scarlett.game.core.sound.Sound;
@@ -39,6 +41,8 @@ public class Weapon extends Equipment{
     @Override
     public void use(){
         if(reloaded && time == 0){
+            Entity bullet = new Bullet(descriptor.getBulletDescriptor(), wielder.getPosition(), wielder.getAngle());
+            ScarlettStationGame.getAllEntities().addEntity(bullet);
             shootingSound.playSound();
             ammoLeft--;
             if(ammoLeft <= 0){

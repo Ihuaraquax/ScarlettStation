@@ -52,14 +52,15 @@ public class ScarlettStationGame implements ApplicationListener {
     }
 
     private void display(){
-        Entity player = allEntities.getPlayer();
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         getCamera().update();
         batch.setProjectionMatrix(getCamera().combined);
         debugRenderer.render(world, getCamera().combined);
         batch.begin();
-        player.display(batch);
+        for(Entity entity : allEntities.getEntityList()) {
+            entity.display(batch);
+        }
         batch.end();
     }
     private void update(){
@@ -67,7 +68,9 @@ public class ScarlettStationGame implements ApplicationListener {
         keyboardInput.processInput(player);
         MouseInput.processInput(player);
 
-        player.update();
+        for(Entity entity : allEntities.getEntityList()) {
+            entity.update();
+        }
         getWorld().step(TIME_STEP, 12, 2);
     }
 

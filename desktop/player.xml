@@ -41,7 +41,7 @@
 			<sound>
 				<directory>gunshot.wav</directory>
 				<type>1</type>
-				<volume>1</volume>
+				<volume>0.1</volume>
 				<id>0</id>
 			</sound>
 			<damage>30</damage>
@@ -49,6 +49,42 @@
 			<cooldown>1.7</cooldown>
 			<reload-time>3.1</reload-time>
 			<shooting-sound-id>0</shooting-sound-id>
+				<bullet>
+					<entity>
+						<animation>
+							<directory>bullet.png</directory>
+							<image-width>16</image-width>
+							<image-height>16</image-height>
+							<type>2</type>
+							<speed>0</speed>
+							<id>0</id>
+						</animation>
+						<idle-animation-id>0</idle-animation-id>
+						<walk-animation-id>0</walk-animation-id>
+						<shoot-animation-id>0</shoot-animation-id>
+						<death-animation-id>0</death-animation-id>
+						<attributes>
+							<health>1</health>
+							<speed>250</speed>
+							<width>0.2</width>
+							<height>0.2</height>
+							<armor>0</armor>
+							<damage-resistances>
+								<normal>0</normal>
+								<fire>0</fire>
+								<frost>0</frost>
+								<electicity>0</electicity>
+								<explosives>0</explosives>
+							</damage-resistances>
+							<collision-mask-bit>1</collision-mask-bit>
+							<collision-category-bit>1</collision-category-bit>
+							<entity-type>0</entity-type>
+						</attributes>
+					</entity>
+					<damage>20</damage>
+					<damage-type>0</damage-type>
+				</bullet>
 		</weapon>
 	</entity>
 </player>
+			

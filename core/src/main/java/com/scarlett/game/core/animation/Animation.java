@@ -26,7 +26,6 @@ public class Animation {
                 regions.add(tile);
             }
         }
-        System.out.print(descriptor.getType());
         type = AnimationType.getByCode(descriptor.getType());
     }
 

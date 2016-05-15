@@ -1,5 +1,6 @@
 package com.scarlett.game.core.equipment.weapon;
 
+import com.scarlett.game.core.entity.bullet.BulletDescriptor;
 import com.scarlett.game.core.sound.SoundDescriptor;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -20,6 +21,8 @@ public class WeaponDescriptor {
     private List<SoundDescriptor> sounds;
     @XmlElement(name = "shooting-sound-id")
     private int shootingSoundId;
+    @XmlElement(name = "bullet")
+    private BulletDescriptor bulletDescriptor;
 
     public WeaponDescriptor(){
         this.damage = 0;
@@ -28,15 +31,17 @@ public class WeaponDescriptor {
         this.reloadTime = 0;
         sounds = null;
         shootingSoundId = 0;
+        bulletDescriptor = null;
     }
 
-    public WeaponDescriptor(int damage, int ammoMax, float cooldown, float reloadTime, List<SoundDescriptor> sounds, int shootingSoundId) {
+    public WeaponDescriptor(int damage, int ammoMax, float cooldown, float reloadTime, List<SoundDescriptor> sounds, int shootingSoundId, BulletDescriptor bulletDescriptor) {
         this.damage = damage;
         this.ammoMax = ammoMax;
         this.cooldown = cooldown;
         this.reloadTime = reloadTime;
         this.sounds = sounds;
         this.shootingSoundId = shootingSoundId;
+        this.bulletDescriptor = bulletDescriptor;
     }
 
     public int getDamage() {
@@ -61,5 +66,9 @@ public class WeaponDescriptor {
 
     public int getShootingSoundId() {
         return shootingSoundId;
+    }
+
+    public BulletDescriptor getBulletDescriptor() {
+        return bulletDescriptor;
     }
 }

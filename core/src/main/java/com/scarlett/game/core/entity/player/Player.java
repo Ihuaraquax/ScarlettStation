@@ -1,11 +1,13 @@
 package com.scarlett.game.core.entity.player;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.scarlett.game.core.entity.Entity;
 import com.scarlett.game.core.input.MouseInput;
 
 public class Player extends Entity{
     public Player(PlayerDescriptor descriptor) {
-        super(descriptor.getEntityDescriptor());
+        super(descriptor.getEntityDescriptor(), new Vector2(10, 10));
     }
 
     @Override
@@ -15,7 +17,7 @@ public class Player extends Entity{
         float playerX = body.getPosition().x;
         float playerY = body.getPosition().y;
         float angle = getAngle(playerX ,playerY , mouseX, mouseY);
-        coordinates.setAngle(angle);
+        body.setTransform(body.getPosition(),angle * MathUtils.degreesToRadians);
     }
 
     public static Entity createPlayer(String filepath){
