@@ -2,6 +2,7 @@ package com.scarlett.game.core.utils;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.scarlett.game.core.GameService;
 import com.scarlett.game.core.ScarlettStationGame;
 import com.scarlett.game.core.entity.Entity;
 
@@ -14,7 +15,7 @@ public class BodyFactory {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(x, y);
 
-        World world = ScarlettStationGame.getWorld();
+        World world = GameService.getInstance().getWorld();
         Body body = world.createBody(bodyDef);
 
         PolygonShape rectangle = new PolygonShape();
@@ -37,7 +38,7 @@ public class BodyFactory {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(x, y);
 
-        World world = ScarlettStationGame.getWorld();
+        World world = GameService.getInstance().getWorld();
         Body body = world.createBody(bodyDef);
 
         CircleShape circle = new CircleShape();
@@ -64,7 +65,7 @@ public class BodyFactory {
         bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(x, y);
 
-        World world = ScarlettStationGame.getWorld();
+        World world = GameService.getInstance().getWorld();
         Body body = world.createBody(bodyDef);
 
         PolygonShape rectangle = new PolygonShape();
@@ -86,7 +87,7 @@ public class BodyFactory {
         Filter filter = new Filter();
         filter.categoryBits = (short)8;
         filter.maskBits = (short)15;
-        World world = ScarlettStationGame.getWorld();
+        World world = GameService.getInstance().getWorld();
         BodyDef bottomWallDef = new BodyDef();
         bottomWallDef.position.set(new Vector2(0,0));
         Body bottomWallBody = world.createBody(bottomWallDef);

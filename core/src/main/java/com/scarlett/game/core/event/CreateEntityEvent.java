@@ -1,5 +1,6 @@
 package com.scarlett.game.core.event;
 
+import com.scarlett.game.core.GameService;
 import com.scarlett.game.core.ScarlettStationGame;
 import com.scarlett.game.core.entity.Entity;
 
@@ -12,6 +13,6 @@ public class CreateEntityEvent extends Event{
 
     @Override
     public void execute() {
-        ScarlettStationGame.getAllEntities().addEntity(entity);
+        GameService.getInstance().getAllEntities().addEntity(entity);
     }
 }

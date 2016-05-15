@@ -3,6 +3,7 @@ package com.scarlett.game.core.input;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3;
+import com.scarlett.game.core.GameService;
 import com.scarlett.game.core.ScarlettStationGame;
 import com.scarlett.game.core.entity.player.Player;
 
@@ -19,7 +20,7 @@ public class MouseInput {
 
     public static Vector3 getUpdatedMousePosition(){
         Vector3 position = getInstance();
-        ScarlettStationGame.getCamera().unproject(mousePosition);
+        GameService.getInstance().getCamera().unproject(mousePosition);
         return position;
     }
 

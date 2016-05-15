@@ -16,6 +16,7 @@ import com.scarlett.game.core.entity.player.Player;
 import com.scarlett.game.core.event.AllEvents;
 import com.scarlett.game.core.input.KeyboardInput;
 import com.scarlett.game.core.input.MouseInput;
+import com.scarlett.game.core.utils.BodyFactory;
 
 public class ScarlettStationGame implements ApplicationListener {
     public static final float PIXELS_TO_METERS = 1/100f;
@@ -32,6 +33,7 @@ public class ScarlettStationGame implements ApplicationListener {
 
     @Override
     public void create() {
+        GameService.setInstance(this);
         Box2D.init();
         batch = new SpriteBatch();
         createCamera();
@@ -42,6 +44,7 @@ public class ScarlettStationGame implements ApplicationListener {
         allEntities = new AllEntities();
         allEntities.setPlayer(player);
         allEvents = new AllEvents();
+        BodyFactory.createBounds(null);
     }
 
     @Override
@@ -98,19 +101,19 @@ public class ScarlettStationGame implements ApplicationListener {
         getCamera().update();
     }
 
-    public static Camera getCamera() {
+    public Camera getCamera() {
         return camera;
     }
 
-    public static World getWorld(){
+    public World getWorld(){
         return world;
     }
 
-    public static AllEntities getAllEntities(){
+    public AllEntities getAllEntities(){
         return allEntities;
     }
 
-    public static AllEvents getAllEvents() {
+    public AllEvents getAllEvents() {
         return allEvents;
     }
 

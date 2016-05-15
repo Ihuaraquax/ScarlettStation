@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.scarlett.game.core.GameService;
 import com.scarlett.game.core.ScarlettStationGame;
 import com.scarlett.game.core.animation.Animation;
 import com.scarlett.game.core.animation.AnimationDescriptor;
@@ -64,7 +65,7 @@ public class Entity {
         specificUpdate();
         if(attributes.getHealth() <= 0){
             Event deleteEntity = new DeleteEntityEvent(this);
-            ScarlettStationGame.getAllEvents().addEvent(deleteEntity);
+            GameService.getInstance().getAllEvents().addEvent(deleteEntity);
         }
     }
 

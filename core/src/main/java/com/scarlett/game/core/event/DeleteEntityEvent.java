@@ -1,5 +1,6 @@
 package com.scarlett.game.core.event;
 
+import com.scarlett.game.core.GameService;
 import com.scarlett.game.core.ScarlettStationGame;
 import com.scarlett.game.core.entity.Entity;
 
@@ -13,6 +14,6 @@ public class DeleteEntityEvent extends Event {
     @Override
     public void execute() {
         entity.agony();
-        ScarlettStationGame.getAllEntities().deleteEntity(entity);
+        GameService.getInstance().getAllEntities().deleteEntity(entity);
     }
 }

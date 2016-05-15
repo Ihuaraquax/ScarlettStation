@@ -1,6 +1,7 @@
 package com.scarlett.game.core.equipment.weapon;
 
 import com.badlogic.gdx.Gdx;
+import com.scarlett.game.core.GameService;
 import com.scarlett.game.core.ScarlettStationGame;
 import com.scarlett.game.core.entity.Entity;
 import com.scarlett.game.core.entity.bullet.Bullet;
@@ -45,7 +46,7 @@ public class Weapon extends Equipment{
         if(reloaded && time == 0){
             Entity bullet = getBullet();
             Event createEvent = new CreateEntityEvent(bullet);
-            ScarlettStationGame.getAllEvents().addEvent(createEvent);
+            GameService.getInstance().getAllEvents().addEvent(createEvent);
             shootingSound.playSound();
             ammoLeft--;
             if(ammoLeft <= 0){
