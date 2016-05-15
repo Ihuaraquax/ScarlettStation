@@ -6,6 +6,8 @@ import com.scarlett.game.core.entity.Entity;
 import com.scarlett.game.core.entity.bullet.Bullet;
 import com.scarlett.game.core.equipment.Equipment;
 import com.scarlett.game.core.equipment.EquipmentType;
+import com.scarlett.game.core.event.CreateEntityEvent;
+import com.scarlett.game.core.event.Event;
 import com.scarlett.game.core.sound.Sound;
 import com.scarlett.game.core.sound.SoundDescriptor;
 
@@ -41,8 +43,9 @@ public class Weapon extends Equipment{
     @Override
     public void use(){
         if(reloaded && time == 0){
-            Entity bullet = new Bullet(descriptor.getBulletDescriptor(), wielder.getPosition(), wielder.getAngle());
-            ScarlettStationGame.getAllEntities().addEntity(bullet);
+            Entity bullet = getBullet();
+            Event createEvent = new CreateEntityEvent(bullet);
+            ScarlettStationGame.getAllEvents().addEvent(createEvent);
             shootingSound.playSound();
             ammoLeft--;
             if(ammoLeft <= 0){
@@ -52,6 +55,10 @@ public class Weapon extends Equipment{
                 time = descriptor.getCooldown();
             }
         }
+    }
+
+    private Entity getBullet(){
+        return new Bullet(descriptor.getBulletDescriptor(), wielder.getPosition(), wielder.getAngle());
     }
 
     private void assignSounds(WeaponDescriptor descriptor){

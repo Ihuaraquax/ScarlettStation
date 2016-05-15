@@ -4,12 +4,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.scarlett.game.core.ScarlettStationGame;
 import com.scarlett.game.core.animation.Animation;
 import com.scarlett.game.core.animation.AnimationDescriptor;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.scarlett.game.core.equipment.Equipment;
 import com.scarlett.game.core.equipment.weapon.Weapon;
 import com.scarlett.game.core.equipment.weapon.WeaponDescriptor;
+import com.scarlett.game.core.event.DeleteEntityEvent;
+import com.scarlett.game.core.event.Event;
 import com.scarlett.game.core.utils.BodyFactory;
 
 public class Entity {
@@ -59,6 +62,10 @@ public class Entity {
             speedY = 0;
         }
         specificUpdate();
+        if(attributes.getHealth() <= 0){
+            Event deleteEntity = new DeleteEntityEvent(this);
+            ScarlettStationGame.getAllEvents().addEvent(deleteEntity);
+        }
     }
 
     protected void specificUpdate(){
@@ -123,6 +130,10 @@ public class Entity {
                 deathAnimation = animation;
             }
         }
+    }
+
+    public void agony(){
+
     }
 
     public void shoot(){

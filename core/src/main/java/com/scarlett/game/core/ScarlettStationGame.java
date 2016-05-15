@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.scarlett.game.core.entity.Entity;
 import com.scarlett.game.core.entity.allentities.AllEntities;
 import com.scarlett.game.core.entity.player.Player;
+import com.scarlett.game.core.event.AllEvents;
 import com.scarlett.game.core.input.KeyboardInput;
 import com.scarlett.game.core.input.MouseInput;
 
@@ -27,6 +28,7 @@ public class ScarlettStationGame implements ApplicationListener {
     private Box2DDebugRenderer debugRenderer;
     private KeyboardInput keyboardInput;
     private static AllEntities allEntities;
+    private static AllEvents allEvents;
 
     @Override
     public void create() {
@@ -39,6 +41,7 @@ public class ScarlettStationGame implements ApplicationListener {
         keyboardInput = new KeyboardInput();
         allEntities = new AllEntities();
         allEntities.setPlayer(player);
+        allEvents = new AllEvents();
     }
 
     @Override
@@ -71,6 +74,7 @@ public class ScarlettStationGame implements ApplicationListener {
         for(Entity entity : allEntities.getEntityList()) {
             entity.update();
         }
+        allEvents.executeEvents();
         getWorld().step(TIME_STEP, 12, 2);
     }
 
@@ -105,4 +109,9 @@ public class ScarlettStationGame implements ApplicationListener {
     public static AllEntities getAllEntities(){
         return allEntities;
     }
+
+    public static AllEvents getAllEvents() {
+        return allEvents;
+    }
+
 }
